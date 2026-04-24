@@ -1,0 +1,37 @@
+{
+  "218622275141": {
+    "xmin": 352,
+    "ymin": 279,
+    "xmax": 736,
+    "ymax": 574,
+    "target": "depth"
+  },
+  "218622272691": {
+    "xmin": 514,
+    "ymin": 313,
+    "xmax": 895,
+    "ymax": 609,
+    "target": "depth"
+  },
+  "148522071643": {
+    "xmin": 441,
+    "ymin": 543,
+    "xmax": 869,
+    "ymax": 719,
+    "target": "depth"
+  },
+  "148522074139": {
+    "xmin": 352,
+    "ymin": 300,
+    "xmax": 675,
+    "ymax": 699,
+    "target": "depth"
+  },
+  "317622072826": {
+    "xmin": 633,
+    "ymin": 289,
+    "xmax": 974,
+    "ymax": 592,
+    "target": "depth"
+  }
+}
