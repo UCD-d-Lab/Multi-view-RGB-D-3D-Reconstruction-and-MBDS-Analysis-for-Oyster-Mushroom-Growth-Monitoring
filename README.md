@@ -9,20 +9,18 @@ The code accompanies the manuscript:
 
 **Multi-view 3D reconstruction with mushroom baseline differential segmentation for oyster mushroom growth phenotyping and harvest-window prediction**
 
-Yuqiao Ren¹, Dimitrios Argyropoulos¹\**
+Yuqiao Ren¹, Dimitrios Argyropoulos¹\*
 
 ¹ Digital Agriculture & Bioresource (d-Lab), School of Biosystems and Food Engineering, University College Dublin, Dublin, Ireland  
 
-\* Corresponding author: dimitrios.argyropoulos@ucd.ie
+* Corresponding author: dimitrios.argyropoulos@ucd.ie
 ---
 
 ## Overview
 
 Accurate and continuous monitoring of oyster mushroom growth is important for phenotyping, growth-rate analysis, and harvest-window prediction. Conventional manual measurements are time-consuming and may disturb the cultivation process, while 2D image-based methods are limited by self-occlusion and incomplete spatial information in complex mushroom clusters. This repository provides the Python scripts used to implement a **multi-view RGB-D point-cloud reconstruction and analysis pipeline** for oyster mushroom growth monitoring. The pipeline integrates automated RealSense RGB-D acquisition, camera ROI setting, multi-view point-cloud reconstruction, pass-through filtering (PF), mushroom baseline differential segmentation (MBDS), AABB-based dimension estimation, and voxel-based volume estimation. The workflow is designed to support continuous, non-destructive monitoring of oyster mushroom clusters using fixed Intel RealSense RGB-D cameras. Reconstruction configurations with various camera model and number can be evaluated by changing the selected calibration bags and camera subset.
 
-<p align="center">
-  <img src="imgs/pipeline_overview.png" width="700">
-</p>
+<img width="2177" height="2145" alt="Picture1" src="https://github.com/user-attachments/assets/f170d15f-73cd-4d49-9b03-2845f602f760" />
 
 <p align="center">Overview of the multi-view RGB-D acquisition, PF reconstruction, MBDS segmentation, dimension & volume estimation pipeline.</p>
 
@@ -237,9 +235,8 @@ The pipeline was evaluated using oyster mushroom cultivation sequences acquired 
 
 The proposed RGB-D point-cloud analysis pipeline was compared against manually processed LiDAR reference point clouds. Both three-camera and five-camera reconstruction configurations achieved satisfactory agreement for mushroom cluster width, depth, height, and volume estimation.
 
-<p align="center">
-  <img src="imgs/validation_results.png" width="700">
-</p>
+<img width="1381" height="1707" alt="Picture2" src="https://github.com/user-attachments/assets/130efd42-00d2-4dbc-8ce2-7d67d9b44236" />
+
 
 <p align="center">Validation plots comparing RGB-D-based estimates with portable LiDAR-based reference measurements.</p>
 
@@ -249,9 +246,8 @@ The proposed RGB-D point-cloud analysis pipeline was compared against manually p
 
 The estimated height, width, depth, and volume trajectories were used to monitor oyster mushroom cluster development across cultivation cycles. The original 15-minute measurements were downsampled to 1-hour intervals for time-series visualisation.
 
-<p align="center">
-  <img src="imgs/growth_timeseries.png" width="700">
-</p>
+<img width="774" height="2128" alt="Picture3" src="https://github.com/user-attachments/assets/35afb3f2-b15b-41cd-af7d-9ff3afec41e0" />
+
 
 <p align="center">Example time-series estimates of oyster mushroom cluster dimensions and volume.</p>
 
@@ -261,13 +257,10 @@ The estimated height, width, depth, and volume trajectories were used to monitor
 
 The processed time-series volume measurements were further used for logistic growth modelling based on exported excel file. The first and second derivatives of the fitted logistic curves were used to evaluate growth rate, growth acceleration, maturity-related transitions, and harvest-window timing.
 
-<p align="center">
-  <img src="imgs/growth_modelling.png" width="700">
-</p>
+<img width="1382" height="1281" alt="Picture4" src="https://github.com/user-attachments/assets/d412eb45-7489-4957-9f5a-062d6355f08e" />
+
 
 <p align="center">Example logistic growth fitting, growth-rate analysis, and growth-acceleration analysis.</p>
-
----
 
 ---
 
