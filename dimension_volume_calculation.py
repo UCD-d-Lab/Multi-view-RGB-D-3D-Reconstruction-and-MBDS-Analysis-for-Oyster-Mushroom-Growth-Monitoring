@@ -42,13 +42,14 @@ ICP_MAX_CORR = 0.02
 USE_ROBUST   = True
 
 # Differential and cleanup
-TAU_COARSE   = 0.025
+TAU_COARSE   = 0.005
+TAU          = 0.025
 SNN_NB       = 40
 SNN_STD      = 1.5
 ROR_R        = 0.008
 ROR_MIN      = 10
 CLUSTER_EPS  = 0.005
-CLUSTER_MIN  = 30 #Original 50
+CLUSTER_MIN  = 30 
 
 # Cap construction
 FOOTPRINT_GROW = 0.02
@@ -313,7 +314,7 @@ def compute_volume_for_pair(baseline_path, current_path, save_debug=False):
     curr = keep_largest_cluster(curr_1)
 
     # 1) Coarse difference to get "current bag candidate" (helps ICP)
-    M0 = subtract_pointclouds(base, curr, 0.005)   # curr - base
+    M0 = subtract_pointclouds(base, curr, TAU_COARSE)   # curr - base
     P  = np.asarray(curr.points)
     Q  = np.asarray(M0.points)
     if Q.size:
@@ -335,8 +336,8 @@ def compute_volume_for_pair(baseline_path, current_path, save_debug=False):
     curr_aligned.transform(T)
 
     # 4) Post-alignment difference: Mushroom body & base candidate
-    mushroom = subtract_pointclouds(base, curr_aligned, TAU_COARSE)  # curr_aligned - base
-    bag      = subtract_pointclouds(curr_aligned, base, TAU_COARSE)  # base - curr_aligned
+    mushroom = subtract_pointclouds(base, curr_aligned, TAU)  # curr_aligned - base
+    bag      = subtract_pointclouds(curr_aligned, base, TAU)  # base - curr_aligned
 
     # Cleanup and largest cluster
     # mushroom = keep_largest_cluster(denoise_pcd(mushroom))

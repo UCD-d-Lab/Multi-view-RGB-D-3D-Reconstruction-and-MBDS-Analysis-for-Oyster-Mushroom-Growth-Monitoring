@@ -45,11 +45,11 @@ IMG_ANALYSIS_SAVE = False  # Save HSV/Lab/RGB and channels for ImageJ analysis
 SHOW_PREVIEWS = False      # Show OpenCV windows during batch
 
 # HSV/S/Lab/RGB ranges (tune as needed)
-LOWER_HSV = (0, 0, 0)
+LOWER_HSV = (5, 5, 5)
 UPPER_HSV = (80, 255, 255)
-LOWER_LAB = (0, 120, 0) 
+LOWER_LAB = (5, 120, 15) 
 UPPER_LAB = (255, 255, 255)
-LOWER_RGB = (0, 0, 0)
+LOWER_RGB = (5, 5, 0)
 UPPER_RGB = (255, 255, 255)
 
 # ROI (image coords)
