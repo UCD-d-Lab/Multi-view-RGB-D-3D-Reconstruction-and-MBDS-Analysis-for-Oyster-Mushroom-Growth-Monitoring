@@ -1,22 +1,3 @@
-"""
-Dimension and volume estimation for oyster mushroom point clouds.
-
-This script implements the MBDS-based segmentation and voxel-based
-volume estimation described in Sections 2.4 and 2.5 of the manuscript.
-
-Inputs:
-    - Baseline PCD before visible mushroom emergence
-    - Time-series reconstructed PCD files
-
-Outputs:
-    - CSV file containing width, depth, height, and volume estimates
-    - Optional segmented PCD files
-
-Notes:
-    - Update input/output paths or provide them through command-line arguments.
-    - columns_only_cm3 corresponds to the final volume used in the research.
-"""
-
 import os, re, csv, copy
 import numpy as np
 import open3d as o3d
