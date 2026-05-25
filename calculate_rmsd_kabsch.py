@@ -1,28 +1,6 @@
-#!/usr/bin/env python
-__doc__ = \
-"""
-
-Calculate Root-mean-square deviation (RMSD) of Two Molecules Using Rotation
-===========================================================================
-
-Calculate Root-mean-square deviation (RMSD) between structure A and B, in XYZ
-or PDB format, using transformation and rotation. The order of the atoms *must*
-be the same for both structures.
-
-For more information, usage, example and citation read more at
-https://github.com/charnley/rmsd
-
-"""
-
-__version__ = '1.2.5'
-
-
 import numpy as np
 import re
 
-
-# Python 2/3 compatibility
-# Make range a iterator in Python 2
 try:
     range = xrange
 except NameError:
