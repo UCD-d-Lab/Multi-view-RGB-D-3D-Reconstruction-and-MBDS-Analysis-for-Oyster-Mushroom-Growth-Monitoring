@@ -88,17 +88,6 @@ def post_process_depth_frame(depth_frame, decimation_magnitude=1.0, spatial_magn
 
     return filtered_frame
 
-
-"""
-  __  __         _           ____               _                _
- |  \/  |  __ _ (_) _ __    / ___| ___   _ __  | |_  ___  _ __  | |_
- | |\/| | / _` || || '_ \  | |    / _ \ | '_ \ | __|/ _ \| '_ \ | __|
- | |  | || (_| || || | | | | |___| (_) || | | || |_|  __/| | | || |_
- |_|  |_| \__,_||_||_| |_|  \____|\___/ |_| |_| \__|\___||_| |_| \__|
-
-"""
-
-
 class DeviceManager:
     def __init__(self, context, D400_pipeline_configuration):
         """
@@ -290,16 +279,6 @@ class DeviceManager:
     def disable_streams(self):
         self.D400_config.disable_all_streams()
 
-
-"""
-  _____           _    _
- |_   _|___  ___ | |_ (_) _ __    __ _
-   | | / _ \/ __|| __|| || '_ \  / _` |
-   | ||  __/\__ \| |_ | || | | || (_| |
-   |_| \___||___/ \__||_||_| |_| \__, |
-                                  |___/
-
-"""
 if __name__ == "__main__":
     try:
         c = rs.config()
