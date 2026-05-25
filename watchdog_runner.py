@@ -23,7 +23,7 @@ def start_child():
     env = os.environ.copy()
     print(f"[{now()}] spawn: {' '.join(cmd)}")
 
-    # 捕获 stdout/stderr
+    # stdout/stderr
     p = subprocess.Popen(
         cmd,
         cwd=WORK_DIR,
