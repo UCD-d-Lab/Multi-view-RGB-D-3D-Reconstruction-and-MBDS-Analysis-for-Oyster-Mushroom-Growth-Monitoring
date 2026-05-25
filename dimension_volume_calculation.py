@@ -15,7 +15,7 @@ os.makedirs(os.path.dirname(OUT_CSV_PATH), exist_ok=True)
 if OUT_DEBUG_DIR: os.makedirs(OUT_DEBUG_DIR, exist_ok=True)
 if OUT_PCD_DIR: os.makedirs(OUT_PCD_DIR, exist_ok=True)
 
-# ========= Parameters (consistent with single-run script) =========
+# ========= Parameters =========
 # Registration/preprocessing
 DS = 0.002
 ICP_VOXEL    = 0.005
