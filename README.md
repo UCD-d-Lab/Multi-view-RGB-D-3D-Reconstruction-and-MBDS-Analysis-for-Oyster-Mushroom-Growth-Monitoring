@@ -18,13 +18,13 @@ Yuqiao Ren¹, Dimitrios Argyropoulos¹\*
 
 ## Overview
 
-Accurate and continuous monitoring of oyster mushroom growth is important for phenotyping, growth-rate analysis, and harvest-window prediction. Conventional manual measurements are time-consuming and may disturb the cultivation process, while 2D image-based methods are limited by self-occlusion and incomplete spatial information in complex mushroom clusters. This repository provides the Python scripts used to implement a multi-view RGB-D point-cloud reconstruction and analysis pipeline for oyster mushroom growth monitoring. The pipeline integrates automated RealSense RGB-D acquisition, camera ROI setting, multi-view point-cloud reconstruction, pass-through filtering (PF), mushroom baseline differential segmentation (MBDS), AABB-based dimension estimation, and voxel-based volume estimation. The workflow is designed to support continuous, non-destructive monitoring of oyster mushroom clusters using fixed Intel RealSense RGB-D cameras. Reconstruction configurations with various camera model and number can be evaluated by changing the selected calibration bags and camera subset.
+Accurate and continuous monitoring of oyster mushroom growth is important for phenotyping, growth-rate analysis, and harvest-window prediction. Conventional manual measurements are time-consuming and may disturb the cultivation process, while 2D image-based methods are limited by self-occlusion and incomplete spatial information in complex mushroom clusters. This repository provides the Python scripts used to implement a multi-view RGB-D point-cloud reconstruction and analysis pipeline for oyster mushroom growth monitoring. The pipeline integrates automated RealSense RGB-D acquisition, camera ROI setting, multi-view point-cloud reconstruction, pass-through filtering (PF), mushroom baseline differential segmentation (MBDS), AABB-based dimension estimation, and voxel-based volume estimation. The workflow is designed to support continuous, non-destructive monitoring of oyster mushroom clusters using fixed Intel RealSense RGB-D cameras. Reconstruction configurations with different camera models and camera numbers can be evaluated by changing the selected calibration bags and camera subset.
 
 <img width="2177" height="2145" alt="Picture1" src="https://github.com/user-attachments/assets/f170d15f-73cd-4d49-9b03-2845f602f760" />
 
 <p align="center">Overview of the multi-view RGB-D acquisition, PF reconstruction, MBDS segmentation, dimension & volume estimation pipeline.</p>
 
-Experiments reported in the manuscript show that the proposed pipeline can estimate oyster mushroom cluster dimensions and volume with satisfactory agreement against reference measurements, and can provide time-series growth curves for high accurate logistic growth modelling and harvest-time prediction. The same processing framework can be adapted to different camera subsets, including the three-camera and five-camera configurations evaluated in the manuscript.
+Experiments reported in the manuscript show that the proposed pipeline can estimate oyster mushroom cluster dimensions and volume with satisfactory agreement against reference measurements, and can provide time-series growth curves for accurate logistic growth modelling and harvest-time prediction. The same processing framework can be adapted to different camera subsets, including the three-camera and five-camera configurations evaluated in the manuscript.
 
 ## Repository structure
 
@@ -47,14 +47,22 @@ Experiments reported in the manuscript show that the proposed pipeline can estim
 
 ## Script description
 
-`roi_setting.py`: Interactive tool for manually defining the auto-exposure region of interest (ROI) for each RealSense camera. The ROI is saved to `roi_config.json`. 
-`automatic_rgbd_capture.py`: Automated RGB-D time-lapse acquisition script. It detects connected RealSense cameras, loads camera-specific JSON settings, applies the ROI configuration, performs warm-up, and records one `.bag` file per camera per acquisition round.
-`watchdog_runner.py`: Optional watchdog script for unattended acquisition. It restarts the acquisition script if the process exits unexpectedly and can support heartbeat-based monitoring. 
-`pcd_pf_reconstruction.py`: Performs chessboard-based multi-camera calibration, pass-through filtering, RGB-D point cloud generation, multi-view transformation, merging, cropping, and PCD export. 
-`dimension_volume_calculation.py`: Performs MBDS segmentation, baseline-guided ICP alignment, refined differencing, footprint cap construction, voxel-based volume estimation, and AABB-based dimension estimation. 
-`bag_manger.py`: Helper module for reading RealSense `.bag` files and extracting depth, infrared, and aligned colour frames. 
-`calculate_rmsd_kabsch.py`: Kabsch algorithm and RMSD calculation module used for chessboard-based calibration. 
-`realsense_device_manager.py`: RealSense helper module for device management and frame polling. It is retained as a helper/reference utility. 
+* `roi_setting.py`: Interactive tool for manually defining the auto-exposure region of interest (ROI) for each RealSense camera. The selected ROI is saved to `roi_config.json`.
+
+* `automatic_rgbd_capture.py`: Automated RGB-D time-lapse acquisition script. It detects connected RealSense cameras, loads camera-specific JSON settings, applies the ROI configuration, performs camera warm-up, and records one `.bag` file per camera per acquisition round.
+
+* `watchdog_runner.py`: Optional watchdog script for unattended long-term acquisition. It restarts the acquisition script if the process exits unexpectedly and can support heartbeat-based monitoring.
+
+* `pcd_pf_reconstruction.py`: Multi-view point-cloud reconstruction script. It performs chessboard-based camera calibration, pass-through filtering, RGB-D point-cloud generation, multi-view transformation, point-cloud merging, spatial cropping, voxel down-sampling, and PCD export.
+
+* `dimension_volume_calculation.py`: MBDS-based segmentation and phenotypic estimation script. It performs baseline-guided ICP alignment, initial and refined differencing, DBSCAN-based dominant-cluster extraction, footprint cap reconstruction, voxel-based volume estimation, and AABB-based dimension estimation.
+
+* `bag_manger.py`: Helper module for reading RealSense `.bag` files and extracting depth, infrared, and aligned colour frames.
+
+* `calculate_rmsd_kabsch.py`: Helper module implementing the Kabsch algorithm and RMSD calculation used for chessboard-based multi-camera calibration.
+
+* `realsense_device_manager.py`: RealSense helper module for device management and frame polling. It is retained as a helper/reference utility.
+
 
 ## Installation and environment setup
 
@@ -362,7 +370,7 @@ The estimated height, width, depth, and volume trajectories were used to monitor
 
 ### Growth modelling and harvest-window prediction
 
-The processed time-series volume measurements were further used for logistic growth modelling based on exported excel file. The first and second derivatives of the fitted logistic curves were used to evaluate growth rate, growth acceleration, maturity-related transitions, and harvest-window timing.
+The processed time-series volume measurements were further used for logistic growth modelling based on the exported CSV/Excel results. The first and second derivatives of the fitted logistic curves were used to evaluate growth rate, growth acceleration, maturity-related transitions, and harvest-window timing.
 
 <img width="1382" height="1281" alt="Picture4" src="https://github.com/user-attachments/assets/d412eb45-7489-4957-9f5a-062d6355f08e" />
 
@@ -376,13 +384,14 @@ The processed time-series volume measurements were further used for logistic gro
 If you use this code, please cite:
 
 ```text
-Ren, Y., & Argyropoulos, D. Multi-view 3D reconstruction with mushroom baseline differential segmentation for oyster mushroom growth phenotyping and harvest-window prediction.
+Ren, Y., & Argyropoulos, D. Multi-view 3D reconstruction of oyster mushroom cluster growth, volume estimation and harvest-window prediction.
 ```
 
 ---
 
 ## Acknowledgment
 
+This work was supported by the European Union’s Horizon Europe research and innovation programme under grant agreement No. 101182954, project AGROBOOST.
 
 
 ---
