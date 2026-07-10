@@ -26,6 +26,23 @@ Accurate and continuous monitoring of oyster mushroom growth is important for ph
 
 Experiments reported in the manuscript show that the proposed pipeline can estimate oyster mushroom cluster dimensions and volume with satisfactory agreement against reference measurements, and can provide time-series growth curves for high accurate logistic growth modelling and harvest-time prediction. The same processing framework can be adapted to different camera subsets, including the three-camera and five-camera configurations evaluated in the manuscript.
 
+## Repository structure
+
+```text
+.
+├── roi_setting.py
+├── automatic_rgbd_capture.py
+├── watchdog_runner.py
+├── pcd_pf_reconstruction.py
+├── dimension_volume_calculation.py
+├── bag_manger.py
+├── calculate_rmsd_kabsch.py
+├── realsense_device_manager.py
+├── README.md
+└── requirements.txt
+```
+
+
 ---
 
 ## Script description
@@ -39,19 +56,97 @@ Experiments reported in the manuscript show that the proposed pipeline can estim
 `calculate_rmsd_kabsch.py`: Kabsch algorithm and RMSD calculation module used for chessboard-based calibration. 
 `realsense_device_manager.py`: RealSense helper module for device management and frame polling. It is retained as a helper/reference utility. 
 
-## Environment
+## Installation and environment setup
 
-The scripts were developed for Intel RealSense RGB-D cameras and Python-based point-cloud processing. The code has been used in the manuscript with the following general environment:
+The scripts were tested using Python 3.12.9 with Intel RealSense RGB-D cameras. A Conda environment is recommended to avoid dependency conflicts.
 
-- Python 3.12.9
-- Intel RealSense SDK 2.0
-- `pyrealsense2`
-- Open3D
-- OpenCV
-- NumPy
-- SciPy
+1. Create and activate a Python environment
+conda create -n mushroom_rgbd python=3.12
+conda activate mushroom_rgbd
 
-Note:** `pyrealsense2` requires the Intel RealSense SDK and compatible camera drivers. Installation and camera access may depend on the operating system, USB bandwidth, camera model, and RealSense firmware version.
+3. Install Python dependencies
+pip install numpy scipy opencv-python open3d pyrealsense2
+
+Alternatively, the dependencies can be installed from a requirements file:
+
+pip install -r requirements.txt
+
+A minimal requirements.txt file can include:
+
+numpy
+scipy
+opencv-python
+open3d
+pyrealsense2
+
+3. Install Intel RealSense SDK 2.0
+
+The Intel RealSense SDK 2.0 and compatible camera drivers should be installed before running the acquisition and bag-processing scripts. Users should first verify that the connected Intel RealSense cameras can be detected in RealSense Viewer.
+
+Before long-term acquisition, please check that:
+
+all RealSense cameras are detected by RealSense Viewer;
+camera firmware and USB 3.0 connections are working correctly;
+sufficient disk space is available for .bag recordings;
+the camera serial numbers and JSON setting files are correctly configured;
+the ROI configuration file has been generated using roi_setting.py.
+
+Note: pyrealsense2 requires Intel RealSense SDK 2.0 and compatible camera drivers. Installation and camera access may depend on the operating system, USB bandwidth, camera model, and firmware version.
+
+## Quick start
+
+After installing the required environment and connecting the RealSense cameras, the complete workflow can be run in the following order:
+
+```bash
+# 1. Define the camera auto-exposure ROI
+python roi_setting.py --target depth --outfile roi_config.json
+
+# 2. Start automated RGB-D acquisition
+python automatic_rgbd_capture.py
+
+# 3. Optional: run acquisition using the watchdog script
+python watchdog_runner.py
+
+# 4. Reconstruct multi-view point clouds from recorded bag files
+python pcd_pf_reconstruction.py
+
+# 5. Run MBDS segmentation and dimension/volume estimation
+python dimension_volume_calculation.py
+```
+
+Before running each script, users should update the input/output paths, camera serial numbers, calibration bag paths, and ROI configuration described in the workflow sections below.
+
+## Input and output data
+
+The main input data are RealSense `.bag` files recorded from multiple RGB-D cameras. Each acquisition round contains one `.bag` file per camera. The reconstruction script groups `.bag` files by timestamp and generates one reconstructed point cloud for each time point.
+
+Expected acquisition folder structure:
+
+```text
+Data_Output/
+├── <camera_serial_1>/
+│   └── YYYY-MM-DD/
+│       ├── YYYY-MM-DD_HH-MM-SS.bag
+│       └── ...
+├── <camera_serial_2>/
+│   └── YYYY-MM-DD/
+│       ├── YYYY-MM-DD_HH-MM-SS.bag
+│       └── ...
+└── ...
+```
+
+Main outputs:
+
+```text
+Generated_PCD_YYYY-MM-DD_HH-MM-SS.pcd
+mushroom_only_<index>.pcd
+Current_before_<index>.pcd
+Current_denoised_<index>.pcd
+results.csv
+```
+
+The output CSV includes ICP registration metrics, AABB-based dimensions, voxel-based volume components, and the final column-filled volume estimate.
+
 
 ## Workflow
 
