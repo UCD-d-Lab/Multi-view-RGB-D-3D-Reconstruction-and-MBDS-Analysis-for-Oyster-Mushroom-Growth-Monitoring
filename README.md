@@ -60,38 +60,50 @@ Experiments reported in the manuscript show that the proposed pipeline can estim
 
 The scripts were tested using Python 3.12.9 with Intel RealSense RGB-D cameras. A Conda environment is recommended to avoid dependency conflicts.
 
-1. Create and activate a Python environment
+### 1. Create and activate a Python environment
+
+```bash
 conda create -n mushroom_rgbd python=3.12
 conda activate mushroom_rgbd
+```
 
-3. Install Python dependencies
+### 2. Install Python dependencies
+
+Install the required Python packages using:
+
+```bash
 pip install numpy scipy opencv-python open3d pyrealsense2
+```
 
-Alternatively, the dependencies can be installed from a requirements file:
+Alternatively, the dependencies can be installed from a `requirements.txt` file:
 
+```bash
 pip install -r requirements.txt
+```
 
-A minimal requirements.txt file can include:
+A minimal `requirements.txt` file can include:
 
+```text
 numpy
 scipy
 opencv-python
 open3d
 pyrealsense2
+```
 
-3. Install Intel RealSense SDK 2.0
+### 3. Install Intel RealSense SDK 2.0
 
 The Intel RealSense SDK 2.0 and compatible camera drivers should be installed before running the acquisition and bag-processing scripts. Users should first verify that the connected Intel RealSense cameras can be detected in RealSense Viewer.
 
 Before long-term acquisition, please check that:
 
-all RealSense cameras are detected by RealSense Viewer;
-camera firmware and USB 3.0 connections are working correctly;
-sufficient disk space is available for .bag recordings;
-the camera serial numbers and JSON setting files are correctly configured;
-the ROI configuration file has been generated using roi_setting.py.
+* all RealSense cameras are detected by RealSense Viewer;
+* the camera firmware and USB 3.0 connections are working correctly;
+* sufficient disk space is available for `.bag` recordings;
+* the camera serial numbers and JSON setting files are correctly configured;
+* the ROI configuration file has been generated using `roi_setting.py`.
 
-Note: pyrealsense2 requires Intel RealSense SDK 2.0 and compatible camera drivers. Installation and camera access may depend on the operating system, USB bandwidth, camera model, and firmware version.
+**Note:** `pyrealsense2` requires Intel RealSense SDK 2.0 and compatible camera drivers. Installation and camera access may depend on the operating system, USB bandwidth, camera model, and firmware version.
 
 ## Quick start
 
